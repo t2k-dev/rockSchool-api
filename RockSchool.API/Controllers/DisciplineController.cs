@@ -12,15 +12,11 @@ namespace RockSchool.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class DisciplineController : ControllerBase
+    public class DisciplineController : MyBaseController
     {
-        private readonly RockSchoolContext _context;
-        private readonly IMapper _mapper;
-
         public DisciplineController(RockSchoolContext rockSchoolContext, IMapper mapper)
+            : base(rockSchoolContext, mapper)
         {
-            _context = rockSchoolContext;
-            _mapper = mapper;
         }
 
         [HttpPost("{disciplineName}")]

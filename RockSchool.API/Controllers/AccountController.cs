@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -12,14 +13,13 @@ namespace RockSchool.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AccountController : ControllerBase
+    public class AccountController : MyBaseController
     {
-        private readonly RockSchoolContext _context;
         private readonly IPasswordHasher<User> _passwordHasher;
 
-        public AccountController(RockSchoolContext rockSchoolContext, IPasswordHasher<User> passwordHasher)
+        public AccountController(RockSchoolContext rockSchoolContext, IMapper mapper, IPasswordHasher<User> passwordHasher)
+            : base (rockSchoolContext, mapper)
         {
-            _context = rockSchoolContext;
             _passwordHasher = passwordHasher;
         }
 

@@ -18,6 +18,8 @@ namespace RockSchool.API
                 .ForMember(d => d.IsActive, map => map.MapFrom(s => s.IsActive));
 
             CreateMap<AddStudentDto, Student>();
+
+            CreateMap<AddScheduleDto, Schedule>();
         }
     }
 }
