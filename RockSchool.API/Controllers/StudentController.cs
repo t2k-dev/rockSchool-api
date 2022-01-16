@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using RockSchool.API.Entities;
+using RockSchool.API.Models;
 
 namespace RockSchool.API.Controllers
 {
@@ -13,23 +15,81 @@ namespace RockSchool.API.Controllers
     public class StudentController : ControllerBase
     {
         private readonly RockSchoolContext _context;
+        private readonly IMapper _mapper;
 
-        public StudentController(RockSchoolContext context)
+        public StudentController(RockSchoolContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         [HttpGet]
         public ActionResult Get()
         {
-            var discepline = _context.Disciplines.FirstOrDefault();
+            var students = _context.Students.ToList();
 
-            if (discepline == null)
+            if (students == null)
             {
                 return NotFound();
             }
 
-            return Ok(discepline);
+            return Ok(students);
+        }
+
+        [HttpPost]
+        public ActionResult Post(AddStudentDto model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var newStudent = _mapper.Map<Student>(model);
+
+            _context.Students.Add(newStudent);
+            _context.SaveChanges();
+
+            return Ok();
+        }
+
+        [HttpPut("{id}")]
+        public ActionResult Put(int id, [FromBody]AddStudentDto model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var student = _context.Students.SingleOrDefault(s => s.StudentId == id);
+            if (student == null)
+            {
+                return NotFound();
+            }
+
+            student.FirstName = model.FirstName;
+            student.LastName = model.LastName;
+            student.MiddleName = model.MiddleName;
+            student.BirthDate = model.BirthDate;
+
+            _context.SaveChanges();
+
+            return Ok();
+        }
+
+        [HttpDelete("{id}")]
+        public ActionResult Delete(int id)
+        {
+            var student = _context.Students.SingleOrDefault(d => d.StudentId == id);
+
+            if (student == null)
+            {
+                return NotFound();
+            }
+
+            _context.Students.Remove(student);
+            _context.SaveChanges();
+
+            return Ok();
         }
     }
 }

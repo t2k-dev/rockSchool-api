@@ -16,6 +16,8 @@ namespace RockSchool.API
                 .ForMember(d => d.Id, map => map.MapFrom(s => s.Id))
                 .ForMember(d => d.DisciplineName, map => map.MapFrom(s => s.DisciplineName))
                 .ForMember(d => d.IsActive, map => map.MapFrom(s => s.IsActive));
+
+            CreateMap<AddStudentDto, Student>();
         }
     }
 }

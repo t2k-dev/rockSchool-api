@@ -3,16 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace RockSchool.API.Entities
+namespace RockSchool.API.Models
 {
-    public class Student
+    public class AddTeacherDto
     {
-        public int StudentId { get; set; }
-        public string LastName { get; set; }
         public string FirstName { get; set; }
+        public string LastName { get; set; }
         public string MiddleName { get; set; }
         public DateTime BirthDate { get; set; }
-        public int? UserId { get; set; }
-        public User User { get; set; }
+        public int UserId { get; set; }
+        public int[] Disciplines { get; set; }
     }
 }

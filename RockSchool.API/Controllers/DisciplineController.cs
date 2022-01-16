@@ -46,9 +46,9 @@ namespace RockSchool.API.Controllers
         [HttpGet]
         public ActionResult Get()
         {
-            var activeDisciplines = _context.Disciplines.ToList();
+            var disciplines = _context.Disciplines.ToList();
 
-            var result = _mapper.Map<List<DisciplineDto>>(activeDisciplines);
+            var result = _mapper.Map<List<DisciplineDto>>(disciplines);
 
             return Ok(result);
         }
