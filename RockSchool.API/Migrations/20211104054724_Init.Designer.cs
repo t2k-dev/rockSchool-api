@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using RockSchool.API.Entities;
@@ -9,9 +10,10 @@ using RockSchool.API.Entities;
 namespace RockSchool.API.Migrations
 {
     [DbContext(typeof(RockSchoolContext))]
-    partial class RockSchoolContextModelSnapshot : ModelSnapshot
+    [Migration("20211104054724_Init")]
+    partial class Init
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -91,21 +93,6 @@ namespace RockSchool.API.Migrations
                     b.ToTable("Disciplines");
                 });
 
-            modelBuilder.Entity("RockSchool.API.Entities.Role", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
-
-                    b.Property<string>("RoleName")
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Role");
-                });
-
             modelBuilder.Entity("RockSchool.API.Entities.Room", b =>
                 {
                     b.Property<int>("RoomId")
@@ -169,12 +156,7 @@ namespace RockSchool.API.Migrations
                     b.Property<string>("MiddleName")
                         .HasColumnType("text");
 
-                    b.Property<int?>("UserId")
-                        .HasColumnType("integer");
-
                     b.HasKey("StudentId");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Students");
                 });
@@ -198,37 +180,9 @@ namespace RockSchool.API.Migrations
                     b.Property<string>("MiddleName")
                         .HasColumnType("text");
 
-                    b.Property<int?>("UserId")
-                        .HasColumnType("integer");
-
                     b.HasKey("TeacherId");
 
-                    b.HasIndex("UserId");
-
                     b.ToTable("Teachers");
-                });
-
-            modelBuilder.Entity("RockSchool.API.Entities.User", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
-
-                    b.Property<string>("Login")
-                        .HasColumnType("text");
-
-                    b.Property<string>("PasswordHash")
-                        .HasColumnType("text");
-
-                    b.Property<int?>("RoleId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("RoleId");
-
-                    b.ToTable("User");
                 });
 
             modelBuilder.Entity("DisciplineTeacher", b =>
@@ -274,33 +228,6 @@ namespace RockSchool.API.Migrations
                         .HasForeignKey("StudentId");
 
                     b.Navigation("Student");
-                });
-
-            modelBuilder.Entity("RockSchool.API.Entities.Student", b =>
-                {
-                    b.HasOne("RockSchool.API.Entities.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId");
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("RockSchool.API.Entities.Teacher", b =>
-                {
-                    b.HasOne("RockSchool.API.Entities.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId");
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("RockSchool.API.Entities.User", b =>
-                {
-                    b.HasOne("RockSchool.API.Entities.Role", "Role")
-                        .WithMany()
-                        .HasForeignKey("RoleId");
-
-                    b.Navigation("Role");
                 });
 #pragma warning restore 612, 618
         }

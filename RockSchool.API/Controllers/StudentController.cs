@@ -10,11 +10,11 @@ namespace RockSchool.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class StudentsController : ControllerBase
+    public class StudentController : ControllerBase
     {
         private readonly RockSchoolContext _context;
 
-        public StudentsController(RockSchoolContext context)
+        public StudentController(RockSchoolContext context)
         {
             _context = context;
         }
@@ -22,7 +22,7 @@ namespace RockSchool.API.Controllers
         [HttpGet]
         public ActionResult Get()
         {
-            var discepline = _context.Disceplines.FirstOrDefault();
+            var discepline = _context.Disciplines.FirstOrDefault();
 
             if (discepline == null)
             {

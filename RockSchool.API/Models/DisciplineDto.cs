@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace RockSchool.API.Entities
+namespace RockSchool.API.Models
 {
-    public class Discipline
+    public class DisciplineDto
     {
         public int Id { get; set; }
+
         public string DisciplineName { get; set; }
-        public ICollection<Teacher> Teachers { get; set; }
+
         public bool IsActive { get; set; }
     }
 }
