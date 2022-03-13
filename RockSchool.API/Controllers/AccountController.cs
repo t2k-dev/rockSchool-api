@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using RockSchool.API.Entities;
 using RockSchool.API.Models;
+using RockSchool.API.Services;
 
 namespace RockSchool.API.Controllers
 {
@@ -46,5 +48,34 @@ namespace RockSchool.API.Controllers
             return Ok();
         }
 
+        [EnableCors("MyPolicy")]
+        [HttpPost("registerStudent")]
+        public ActionResult RegisterStudent([FromBody] RegisterStudentDto model)
+        {
+            if (!ModelState.IsValid)
+            {
+                throw new Exception("Incorrect model for registration.");
+            }
+
+            // Add user
+            var usersService = new UserService(_context, _passwordHasher);
+            var userId = usersService.AddUser(model.Login, (int) UserRole.Student);
+
+            var newStudent = new AddStudentDto
+            {
+                FirstName = model.FirstName,
+                LastName = model.LastName,
+                BirthDate = model.BirthDate,
+                Sex = model.Sex,
+                Phone = model.Phone,
+                UserId = userId
+            };
+
+            // Add student
+            var studentService = new StudentService(_context, _mapper);
+            studentService.AddStudent(newStudent);
+
+            return Ok();
+        }
     }
 }

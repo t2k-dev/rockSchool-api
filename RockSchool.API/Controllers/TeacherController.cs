@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -19,7 +20,8 @@ namespace RockSchool.API.Controllers
             : base(rockSchoolContext, mapper)
         {
         }
-
+        
+        [EnableCors("MyPolicy")]
         [HttpGet]
         public ActionResult Get()
         {
@@ -33,6 +35,7 @@ namespace RockSchool.API.Controllers
             return Ok(teachers);
         }
 
+        [EnableCors("MyPolicy")]
         [HttpPost]
         public ActionResult Post(AddTeacherDto model)
         {
