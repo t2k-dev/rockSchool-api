@@ -12,6 +12,7 @@ namespace RockSchool.API.Entities
         public string FirstName { get; set; }
         public string MiddleName { get; set; }
         public DateTime BirthDate { get; set; }
+        public long Phone { get; set; }
         public ICollection<Discipline> Disciplines { get; set; }
         public int? UserId { get; set; }
         public User User { get; set; }

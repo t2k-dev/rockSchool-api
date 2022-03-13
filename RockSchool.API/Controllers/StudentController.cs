@@ -64,7 +64,6 @@ namespace RockSchool.API.Controllers
 
             student.FirstName = model.FirstName;
             student.LastName = model.LastName;
-            student.MiddleName = model.MiddleName;
             student.BirthDate = model.BirthDate;
 
             _context.SaveChanges();

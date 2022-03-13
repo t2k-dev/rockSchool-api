@@ -10,8 +10,9 @@ namespace RockSchool.API.Entities
         public int StudentId { get; set; }
         public string LastName { get; set; }
         public string FirstName { get; set; }
-        public string MiddleName { get; set; }
         public DateTime BirthDate { get; set; }
+        public long Phone { get; set; }
+        public short Sex { get; set; }
         public int? UserId { get; set; }
         public User User { get; set; }
     }
