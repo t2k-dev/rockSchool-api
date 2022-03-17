@@ -20,6 +20,7 @@ namespace RockSchool.API.Entities
         public DbSet<Attendance> Attendances { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<WorkingPeriod> WorkingPeriods { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
