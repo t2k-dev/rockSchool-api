@@ -20,12 +20,14 @@ namespace RockSchool.API.Controllers
             : base(rockSchoolContext, mapper)
         {
         }
-        
+
         [EnableCors("MyPolicy")]
         [HttpGet]
         public ActionResult Get()
         {
-            var teachers = _context.Teachers.ToList();
+            var teachers = _context.Teachers
+                .Include(t => t.Disciplines)
+                .ToList();
 
             if (teachers == null)
             {
@@ -33,6 +35,34 @@ namespace RockSchool.API.Controllers
             }
 
             return Ok(teachers);
+        }
+
+        [EnableCors("MyPolicy")]
+        [HttpGet("{id}")]
+        public ActionResult Get(int id)
+        {
+            var teacher = _context.Teachers
+                .Include(t => t.User)
+                .Include(t => t.Disciplines)
+                .SingleOrDefault(t => t.TeacherId == id);
+
+            if (teacher == null)
+            {
+                return NotFound();
+            }
+
+            var result = new TeacherDto
+            {
+                Email = teacher.User.Login,
+                FirstName = teacher.FirstName,
+                LastName = teacher.LastName,
+                MiddleName = teacher.MiddleName,
+                BirthDate = teacher.BirthDate,
+                Phone = teacher.Phone,
+                Disciplines = teacher.Disciplines.Select(d => d.Id).ToArray(),
+            };
+
+            return Ok(result);
         }
 
         [EnableCors("MyPolicy")]

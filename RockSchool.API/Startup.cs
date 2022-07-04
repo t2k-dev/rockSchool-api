@@ -35,6 +35,9 @@ namespace RockSchool.API
             services.AddDbContext<RockSchoolContext>(
                 opts => opts.UseNpgsql(Configuration["DbContextSettings:ConnectionString"])
             );
+            services.AddControllers().AddNewtonsoftJson(options =>
+                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+            );
             services.AddCors(options =>
             {
                 options.AddPolicy("MyPolicy",

@@ -1,10 +1,12 @@
 ﻿using RockSchool.API.Entities;
 using System;
 
+
 namespace RockSchool.API.Models
 {
-    public class AddTeacherDto
+    public class TeacherDto
     {
+        public string Email { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string MiddleName { get; set; }

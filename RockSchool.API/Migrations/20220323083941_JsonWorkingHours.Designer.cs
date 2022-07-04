@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using RockSchool.API.Entities;
@@ -9,9 +10,10 @@ using RockSchool.API.Entities;
 namespace RockSchool.API.Migrations
 {
     [DbContext(typeof(RockSchoolContext))]
-    partial class RockSchoolContextModelSnapshot : ModelSnapshot
+    [Migration("20220323083941_JsonWorkingHours")]
+    partial class JsonWorkingHours
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -229,7 +231,7 @@ namespace RockSchool.API.Migrations
                     b.Property<int?>("UserId")
                         .HasColumnType("integer");
 
-                    b.Property<WorkingHours>("WorkingHours")
+                    b.Property<string>("WorkingHours")
                         .HasColumnType("jsonb");
 
                     b.HasKey("TeacherId");
@@ -260,6 +262,32 @@ namespace RockSchool.API.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("RockSchool.API.Entities.WorkingPeriod", b =>
+                {
+                    b.Property<int>("WorkingPeriodId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<DateTime>("EndTime")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<DateTime>("StartTime")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<int>("TeacherId")
+                        .HasColumnType("integer");
+
+                    b.Property<short>("WeekDay")
+                        .HasColumnType("smallint");
+
+                    b.HasKey("WorkingPeriodId");
+
+                    b.HasIndex("TeacherId");
+
+                    b.ToTable("WorkingPeriods");
                 });
 
             modelBuilder.Entity("DisciplineTeacher", b =>
@@ -348,6 +376,17 @@ namespace RockSchool.API.Migrations
                         .IsRequired();
 
                     b.Navigation("Role");
+                });
+
+            modelBuilder.Entity("RockSchool.API.Entities.WorkingPeriod", b =>
+                {
+                    b.HasOne("RockSchool.API.Entities.Teacher", "Teacher")
+                        .WithMany()
+                        .HasForeignKey("TeacherId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Teacher");
                 });
 #pragma warning restore 612, 618
         }

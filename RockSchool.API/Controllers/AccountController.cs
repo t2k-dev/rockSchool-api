@@ -77,5 +77,37 @@ namespace RockSchool.API.Controllers
 
             return Ok();
         }
+
+        [EnableCors("MyPolicy")]
+        [HttpPost("registerTeacher")]
+        public ActionResult RegisterTeacher([FromBody] RegisterTeacherDto model)
+        {
+            if (!ModelState.IsValid)
+            {
+                throw new Exception("Incorrect model for registration.");
+            }
+
+            // Add user
+            var usersService = new UserService(_context, _passwordHasher);
+            var userId = usersService.AddUser(model.Login, (int) UserRole.Teacher);
+
+            var newTeacher = new AddTeacherDto
+            {
+                FirstName = model.FirstName,
+                LastName = model.LastName,
+                MiddleName = model.MiddleName,
+                BirthDate = model.BirthDate,
+                Phone = model.Phone,
+                UserId = userId,
+                Disciplines = model.Disciplines,
+                WorkingHours = model.WorkingHours
+            };
+
+            // Add teacher
+            var teacherService = new TeacherService(_context, _mapper);
+            var teacherId = teacherService.AddTeacher(newTeacher);
+
+            return Ok();
+        }
     }
 }
