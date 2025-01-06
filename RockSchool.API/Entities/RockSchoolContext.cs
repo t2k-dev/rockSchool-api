@@ -27,6 +27,17 @@ namespace RockSchool.API.Entities
                 new Role { RoleId = 1, RoleName = "Admin" },
                 new Role { RoleId = 2, RoleName = "Teacher" },
                 new Role { RoleId = 3, RoleName = "Student" });
+
+            modelBuilder.Entity<Discipline>().HasData(
+                new Discipline { Id = 1, DisciplineName = "Guitar" },
+                new Discipline { Id = 2, DisciplineName = "Electric Guitar" },
+                new Discipline { Id = 3, DisciplineName = "Bass Guitar" },
+                new Discipline { Id = 4, DisciplineName = "Ukulele" },
+                new Discipline { Id = 5, DisciplineName = "Vocals" },
+                new Discipline { Id = 6, DisciplineName = "Drums" },
+                new Discipline { Id = 7, DisciplineName = "Piano" },
+                new Discipline { Id = 8, DisciplineName = "Violin" },
+                new Discipline { Id = 9, DisciplineName = "Extreme Vocals" });
         }
     }
 }
